@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+group = 'com.example.starforge'
+version = '1.0.0'
+base.archivesName = 'starforge'
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+minecraft {
+    mappings channel: 'official', version: '1.21.1'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            mods { 'starforge' { source sourceSets.main } }
+        }
+    }
+}
+
+repositories { }
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.21.1-52.1.16'
+}
+
+tasks.named('jar', Jar).configure {
+    finalizedBy 'reobfJar'
+}
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
